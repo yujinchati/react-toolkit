@@ -1,7 +1,7 @@
 import Footer from './components/common/footer/Footer';
 import Header from './components/common/header/Header';
 import MainWrap from './components/main/mainWrap/MainWrap';
-import Members from './components/sub/members/Members';
+import Members from './components/sub/Members/Members';
 import Community from './components/sub/community/Community';
 import Contact from './components/sub/contact/Contact';
 import Department from './components/sub/department/Department';
@@ -14,7 +14,7 @@ import { useState } from 'react';
 import { useMedia } from './hooks/useMedia';
 import Menu from './components/common/memu/Menu';
 import Detail from './components/sub/youtube/Detail';
-import Welcome from './components/sub/members/Welcome';
+import Welcome from './components/sub/Members/Welcome';
 
 //git confige option 수정
 export default function App() {
