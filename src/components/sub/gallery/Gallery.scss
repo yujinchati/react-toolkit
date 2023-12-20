@@ -1,0 +1,139 @@
+.Gallery {
+	--num: 4;
+
+	.controls {
+		width: 100%;
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		padding: 20px 5px;
+
+		.btnSet {
+			display: flex;
+			gap: 20px;
+
+			button {
+				background: transparent;
+				border: none;
+				cursor: pointer;
+				padding: 7px 0px;
+				//border-bottom: 1px solid rgba(var(--baseColor-code), 0.3);
+				font-size: 1rem;
+				color: rgba(var(--baseColor-code), 0.4);
+				position: relative;
+				transition: 0.5s;
+
+				&::after {
+					content: '';
+					display: block;
+					position: absolute;
+					bottom: 0;
+					left: 0;
+					width: 0%;
+					height: 1px;
+					background: var(--baseColor);
+					transition: 0.5s;
+				}
+
+				&.on {
+					color: rgba(var(--baseColor-code), 1);
+					&::after {
+						width: 100%;
+					}
+				}
+			}
+		}
+
+		form {
+			display: flex;
+			align-items: center;
+			gap: 10px;
+
+			input {
+				width: 120px;
+				border: none;
+				background-color: transparent;
+				border-bottom: 1px solid rgba(var(--baseColor-code), 0.5);
+				padding: 6px 10px;
+				outline: 0;
+			}
+
+			.btnSearch {
+				border: none;
+				background-color: transparent;
+				font-size: 1.2rem;
+				color: var(--baseColor);
+				cursor: pointer;
+			}
+		}
+	}
+
+	.frameWrap {
+		//--gap: 20px; 해당값은 리액트에서 처음 useEffect실행시 동적으로 생성되는 변수값
+		.frame {
+			width: 100%;
+			display: flex;
+			flex-wrap: wrap;
+			gap: var(--gap);
+			justify-content: flex-start;
+
+			article {
+				width: calc((100% - var(--gap) * (var(--num) - 1)) / var(--num));
+				margin-bottom: 70px;
+				border-bottom: 1px solid rgba(var(--baseColor-code), 0.5);
+
+				.pic {
+					width: 100%;
+					margin-bottom: 10px;
+
+					img {
+						width: 100%;
+					}
+				}
+				h2 {
+					font-weight: normal;
+					font-size: 1rem;
+					line-height: 1.2;
+					margin-bottom: 10px;
+				}
+				.profile {
+					width: 100%;
+					display: flex;
+					align-items: flex-end;
+					gap: 10px;
+					margin-bottom: 20px;
+
+					img {
+						width: 40px;
+					}
+					span {
+						color: var(--pointColor);
+						font-size: 0.8rem;
+						word-break: break-all;
+					}
+				}
+			}
+		}
+	}
+}
+
+//laptop
+.laptop {
+	.Gallery {
+		--num: 3;
+	}
+}
+
+//tablet
+.tablet {
+	.Gallery {
+		--num: 2;
+	}
+}
+
+//mobile
+.mobile {
+	.Gallery {
+		--num: 1;
+	}
+}
