@@ -8,8 +8,8 @@ import { useCustomText } from '../../../hooks/useText';
 export default function Community() {
 	const changeText = useCustomText('combined');
 	const getLocalData = () => {
-		const data = localStorage.getItem('post');
-		return JSON.parse(data);
+		if (data) return JSON.parse(data);
+		else return [];
 	};
 	const [Post, setPost] = useState(getLocalData());
 	const refTit = useRef(null);
