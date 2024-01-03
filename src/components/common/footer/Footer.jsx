@@ -1,8 +1,11 @@
+import { useCookie } from '../../../hooks/useCookie';
 import './Footer.scss';
 import { FaFacebookF, FaTwitter, FaYoutube } from 'react-icons/fa';
 //npm i react-icons
 
 export default function Footer() {
+	const { setCookie, isCookie, viewCookie } = useCookie();
+
 	return (
 		<footer className='Footer'>
 			<h1>Dcodelab</h1>

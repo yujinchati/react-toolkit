@@ -18,15 +18,18 @@ import Welcome from './components/sub/Members/Welcome';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { useGlobalData } from './hooks/useGlobalData';
+import { useCookie } from './hooks/useCookie';
+import CookieModal from './components/common/cookieModal/CookieModal';
 
 //git confige option 수정
 export default function App() {
-	const { Dark } = useGlobalData();
+	const { Mode } = useGlobalData();
 	const queryclient = new QueryClient();
+	useCookie('today', 'done', 20);
 
 	return (
 		<QueryClientProvider client={queryclient}>
-			<div className={`wrap ${Dark ? 'dark' : ''} ${useMedia()}`}>
+			<div className={`wrap ${Mode === 'light' ? 'light' : 'dark'} ${useMedia()}`}>
 				<Header />
 				<Route exact path='/' component={MainWrap} />
 				<Route path='/department' component={Department} />
@@ -39,6 +42,9 @@ export default function App() {
 				<Route path='/welcome/:id' component={Welcome} />
 				<Footer />
 				<Menu />
+				<CookieModal wid={600} ht={400}>
+					<h1>쿠키팝업</h1>
+				</CookieModal>
 			</div>
 			<ReactQueryDevtools />
 		</QueryClientProvider>
