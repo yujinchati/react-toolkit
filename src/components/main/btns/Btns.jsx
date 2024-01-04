@@ -1,8 +1,10 @@
 import Anime from '../../../asset/anime';
 import './Btns.scss';
 import { useRef, useState, useEffect } from 'react';
+import { useThrottle } from '../../../hooks/useThrottle';
 
 export default function Btns() {
+	console.log('re-render');
 	const [Index, setIndex] = useState(0);
 	const [Num, setNum] = useState(0);
 	const wrap = useRef(null);
@@ -10,6 +12,7 @@ export default function Btns() {
 	const btns = useRef(null);
 
 	const activation = () => {
+		console.log('activation');
 		const scroll = wrap.current.scrollTop;
 
 		secs.current.forEach((sec, idx) => {
@@ -20,14 +23,16 @@ export default function Btns() {
 		});
 	};
 
+	const throttledActivation = useThrottle(activation);
+
 	useEffect(() => {
 		wrap.current = document.querySelector('.wrap');
 		secs.current = document.querySelectorAll('.myScroll');
 		setNum(secs.current.length);
 
-		wrap.current.addEventListener('scroll', activation);
-		return () => wrap.current.removeEventListener('scroll', activation);
-	}, []);
+		wrap.current.addEventListener('scroll', throttledActivation);
+		return () => wrap.current.removeEventListener('scroll', throttledActivation);
+	}, [throttledActivation]);
 
 	return (
 		<ul className='Btns' ref={btns}>
@@ -40,14 +45,7 @@ export default function Btns() {
 							className={idx === Index ? 'on' : ''}
 							onClick={() => {
 								//new Anime(선택자, {속성명1:속성값2, 속성명2:속성값2}, {duration:속도, easeType:가속도, callback:컴플릭함수})
-								new Anime(
-									wrap.current,
-									{ scroll: secs.current[idx].offsetTop },
-									{
-										ease: [0.43, -1.06, 0.69, 1.72],
-										callback: () => {}
-									}
-								);
+								new Anime(wrap.current, { scroll: secs.current[idx].offsetTop }, { duration: 1000 });
 							}}></li>
 					);
 				})}
