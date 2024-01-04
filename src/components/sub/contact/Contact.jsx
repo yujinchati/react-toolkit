@@ -123,7 +123,7 @@ export default function Contact() {
 	}, [View, roadview]);
 
 	useEffect(() => {
-		Traffic;
+		Traffic();
 	}, [Traffic]);
 
 	return (
