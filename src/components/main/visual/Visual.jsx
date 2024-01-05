@@ -4,6 +4,7 @@ import { Autoplay } from 'swiper';
 import './Visual.scss';
 import 'swiper/css';
 import { useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 export default function Visual() {
 	const num = useRef(5);
@@ -27,10 +28,8 @@ export default function Visual() {
 			swiper.realIndex === num.current - 1 ? setNextIndex(0) : setNextIndex(swiper.realIndex + 1);
 		},
 		autoplay: { delay: 2000, disableOnInteraction: true },
-		breakpoints: {
-			1000: { slidesPerView: 2 },
-			1400: { slidesPerView: 3 }
-		}
+		breakpoints: { 1000: { slidesPerView: 2 }, 1400: { slidesPerView: 3 } },
+		onSwiper: swiper => (swipeRef.current = swiper)
 	});
 
 	const trimTitle = title => {
@@ -52,6 +51,7 @@ export default function Visual() {
 							return (
 								<li key={el.id} className={idx === Index ? 'on' : ''}>
 									<h3>{trimTitle(el.snippet.title)}</h3>
+									<Link to={`/detail/${el.id}`}>View Detail</Link>
 								</li>
 							);
 						})}
@@ -89,6 +89,21 @@ export default function Visual() {
 					</>
 				)}
 			</nav>
+			<ul className='pagination'>
+				{Array(num.current)
+					.fill()
+					.map((_, idx) => {
+						return <li key={idx} className={idx === Index ? 'on' : ''} onClick={() => swipeRef.current.slideToLoop(idx, 400)}></li>;
+					})}
+			</ul>
+
+			<div className='barFrame'>
+				<p className='bar' style={{ width: (100 / num.current) * (Index + 1) + '%' }}></p>
+			</div>
+
+			<div className='counter'>
+				<strong>0{Index + 1}</strong>/<span>0{num.current}</span>
+			</div>
 		</figure>
 	);
 }

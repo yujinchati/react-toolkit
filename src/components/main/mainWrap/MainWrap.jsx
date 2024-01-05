@@ -12,7 +12,7 @@ export default function MainWrap() {
 			<Info />
 			<Pics />
 			<Banner />
-			<Btns />
+			<Btns frame={'.wrap'} item={'.myScroll'} base={-window.innerHeight / 2} isAuto={false} />
 		</div>
 	);
 }
