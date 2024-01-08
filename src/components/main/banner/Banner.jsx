@@ -1,25 +1,32 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useCallback } from 'react';
 import { useScroll } from '../../../hooks/useScroll';
 import './Banner.scss';
 
 export default function Banner() {
-	const refBanner = useRef(null);
-	const [Frame, setFrame] = useState(null);
-	const [Scrolled, setScrolled] = useState(0);
+	const boxEl = useRef(null);
 
-	const { getCurrentScroll } = useScroll(Frame);
+	//순서3 - 커스텀훅 호출시 useScroll이 제공하고 있는 빈참조객체 가져옴
+	const { getCurrentScroll, Frame, refEl } = useScroll();
+
+	const handleScroll = useCallback(() => {
+		const scroll = getCurrentScroll(-window.innerHeight / 2);
+		if (scroll >= 0) {
+			boxEl.current.style.transform = `rotate(${scroll / 2}deg) scale(${1 + scroll / 400})`;
+			boxEl.current.style.opacity = 1 - scroll / 400;
+		}
+	}, [getCurrentScroll]);
+
+	//바꿀때마다 바꿔야하니 useRef가 아닌 callback으로
 
 	useEffect(() => {
-		setFrame(refBanner.current?.closest('.wrap'));
-		Frame?.addEventListener('scroll', () => {
-			const scroll = getCurrentScroll(refBanner.current, -window.innerHeight / 2);
-			scroll >= 0 && setScrolled(scroll);
-		});
-	}, [Frame, getCurrentScroll]);
+		Frame?.addEventListener('scroll', handleScroll);
+		return () => Frame?.removeEventListener('scroll', handleScroll);
+	}, [Frame, handleScroll]);
 
 	return (
-		<section className='Banner myScroll' ref={refBanner}>
-			<div className='box' style={{ transform: `rotate(${Scrolled / 2}deg) scale(${1 + Scrolled / 400}) `, opacity: `${1 - Scrolled / 400}` }}></div>
+		//순서4- 원하는 요소에 빈 참조객체 연결
+		<section className='Banner myScroll' ref={refEl}>
+			<div className='box' ref={boxEl}></div>
 		</section>
 	);
 }
