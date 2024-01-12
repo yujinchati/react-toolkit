@@ -1,5 +1,6 @@
 import Banner from '../banner/Banner';
 import Btns from '../btns/Btns';
+import Ilust from '../ilust/Ilust';
 import Info from '../info/Info';
 import Pics from '../pics/Pics';
 import Visual from '../visual/Visual';
@@ -12,6 +13,7 @@ export default function MainWrap() {
 			<Info />
 			<Pics />
 			<Banner />
+			<Ilust />
 			<Btns frame={'.wrap'} item={'.myScroll'} base={-window.innerHeight / 2} isAuto={false} />
 		</div>
 	);

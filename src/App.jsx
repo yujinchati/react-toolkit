@@ -25,7 +25,20 @@ import CookieModal from './components/common/cookieModal/CookieModal';
 export default function App() {
 	const { Mode } = useGlobalData();
 	const queryclient = new QueryClient();
-	useCookie('today', 'done', 20);
+	const [Count1, setCount1] = useState(1);
+	const [Count2, setCount2] = useState(2);
+
+	const returnPromise = () => {
+		return new Promise(res => setTimeout(res, 500));
+	};
+
+	const changeState = () => {
+		//promise 반환되는 핸들러 안쪽에서 복수개의 state가 변경된다면 Batching기능이 풀리면서 state의 갯수만큼 재랜더링 발생 --> 해당 기능을 개선한것이 react18에서의 automatching
+		returnPromise().then(() => {
+			setCount1(Count1 + 1);
+			setCount2(Count2 + 1);
+		});
+	};
 
 	return (
 		<QueryClientProvider client={queryclient}>
