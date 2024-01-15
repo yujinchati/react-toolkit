@@ -5,9 +5,13 @@ export function useScroll(customHandler, baseLine = -window.innerHeight / 2) {
 	const refEl = useRef(null);
 	const [Frame, setFrame] = useState(null);
 
-	const scrollTo = targetPos => {
-		Frame && new Anime(Frame, { scroll: targetPos });
-	};
+	const scrollTo = useCallback(
+		targetPos => {
+			console.log(targetPos);
+			Frame && new Anime(Frame, { scroll: targetPos });
+		},
+		[Frame]
+	);
 
 	const getCurrentScroll = useCallback(() => {
 		//기존 Btns컴포넌트에 baseLine적용시에는 기존 setction의 offsetTop값에 baseLine값을 빼서 기준점을 올리는 방식
